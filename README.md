@@ -1,13 +1,10 @@
 # **M324 – Gruppe 4**
 
-<<<<<<< HEAD
 **Theorieinhalte**
 [T1](Theorie/T1.md)
 [T2](Theorie/T2.md)
-=======
 Willkommen im Repository der Gruppe 4 für das Modul **M324 – Ticket System Backend**.
 Dieses Repository enthält alle Theorieinhalte, Dokumentationen, Code-Artefakte sowie externe Links wie Zeitlogging und persönliche Lernjournale.
->>>>>>> 39925d02c5e8f05532e21de3cfe49becb8a8d772
 
 ## 📘 **Theorieinhalte**
 
