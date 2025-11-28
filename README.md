@@ -9,7 +9,8 @@ Dieses Repository enthält alle Theorieinhalte, Dokumentationen, Code-Artefakte 
 
 | Thema | Link                |
 | ----- | ------------------- |
-| T1    | [T1](Theorie/T1.md) |
+| T1    | [T1](./Theorie/T1)  |
+| T2    | [T1](./Theorie/T2)  |
 
 ---
 
