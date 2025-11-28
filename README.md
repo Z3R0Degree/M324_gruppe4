@@ -3,8 +3,6 @@
 Willkommen im Repository der Gruppe 4 für das Modul **M324 – Ticket System Backend**.
 Dieses Repository enthält alle Theorieinhalte, Dokumentationen, Code-Artefakte sowie externe Links wie Zeitlogging und persönliche Lernjournale.
 
----
-
 ## 📘 **Theorieinhalte**
 
 | Thema | Link                |
@@ -12,17 +10,10 @@ Dieses Repository enthält alle Theorieinhalte, Dokumentationen, Code-Artefakte 
 | T1    | [T1](./Theorie/T1)  |
 | T2    | [T1](./Theorie/T2)  |
 
----
-
-## 📚 **Themenblöcke**
-
-Hier erscheinen später die erarbeiteten Theorie- und Projekt-Themen (z. B. Branching Strategien, CI/CD, Testing, Architektur usw.).
-
----
 
 ## 🔗 **Andere Links**
 
-### **📄 Lernjournale (freiwillig)**
+### **📄 Lernjournale**
 
 * Marvin – *noch kein Link*
 * Deniz – *noch kein Link*
