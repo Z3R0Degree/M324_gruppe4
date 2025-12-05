@@ -18,8 +18,8 @@ Dieses Repository enthält alle Theorieinhalte, Dokumentationen, Code-Artefakte 
 
 ### **📄 Lernjournale**
 
-* Marvin – *noch kein Link*
-* Deniz – *noch kein Link*
+* Marwin – [Lernjounal](https://docs.google.com/document/d/1_bJR3PGBhJw8Zl3Cn6oZ13EP_Wt0-i1PFr4kVd8tX3M/edit?usp=sharing)
+* Deniz – [Lernjournal](https://docs.google.com/document/d/1hnC4-qjH6sxixmm1LCqLcNLNCgDYrrv15Jk8U6RCdIQ/edit?tab=t.0#heading=h.1bftqvaqujxm)
 * Abinayan – [Lernjournal](https://docs.google.com/document/d/1Z-VedaLESPoZHHjEb0JhYOUD32pX8b0KdUHJQgBhe5I/edit)
 * Haru – [Lernjournal](https://docs.google.com/document/d/1K5oxnPi-GoDN2wiyLXP3Kf7Pmyoiv7AKMtZLFwpv8JM/edit)
 * Jamira – *noch kein Link*
