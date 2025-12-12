@@ -2,7 +2,7 @@
 
 # 1. Was ist SDLC?
 
-Der Software Development Life Cycle (SDLC) ist ein strukturierter Prozess zur Planung, Entwicklung, Testung und Auslieferung von Software. Er stellt sicher, dass Software qualitativ hochwertig, kosteneffizient und innerhalb der gesetzten Anforderungen** entsteht.
+Der Software Development Life Cycle (SDLC) ist ein strukturierter Prozess zur Planung, Entwicklung, Testung und Auslieferung von Software. Er stellt sicher, dass Software qualitativ hochwertig, kosteneffizient und innerhalb der gesetzten Anforderungen entsteht.
 
 ### Ziel des SDLC
 
@@ -81,7 +81,7 @@ Der Software Development Life Cycle (SDLC) ist ein strukturierter Prozess zur Pl
 
 ## 1.2 Anwendung des SDLC im Projekt
 
-In klassischen Projekten (z. B. Wasserfallmodell) wird der SDLC **linear** durchlaufen → jede Phase ist abgeschlossen, bevor die nächste beginnt.
+In klassischen Projekten (z. B. Wasserfallmodell) wird der SDLC linear durchlaufen → jede Phase ist abgeschlossen, bevor die nächste beginnt.
 
 In modernen Projekten (Scrum, Agile):
 

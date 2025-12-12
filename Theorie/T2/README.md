@@ -1,7 +1,7 @@
 ## 1. Was sind „The Three Ways“?
 
 Die Three Ways sind drei Grundprinzipien von DevOps:
-**(1)** Systems Thinking – Fokus auf den gesamten Flow.
+**(1)** Maximiere flow – Fokus auf den gesamten Flow.
 **(2)** Amplify Feedback Loops – Feedback schnell und häufig erhalten.
 **(3)** Continual Learning & Experimentation – Lernen, Fehlerkultur, Innovation.
 Sie helfen Unternehmen, schneller, sicherer und kundenorientierter zu arbeiten.
