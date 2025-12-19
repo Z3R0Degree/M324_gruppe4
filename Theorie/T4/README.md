@@ -1,4 +1,4 @@
-# Continuous Integration – Kurzfassung der Themen
+# Continuous Integration
 
 ## 1. Was ist Continuous Integration (CI) und wie wird es umgesetzt?
 
