@@ -14,6 +14,7 @@ Dieses Repository enthält alle Theorieinhalte, Dokumentationen, Code-Artefakte 
 | T2    | [T2](./Theorie/T2) |
 | T3    | [T3](./Theorie/T3) |
 | T4    | [T4](./Theorie/T4) |
+| T5    | [T5](./Theorie/T5) |
 
 ## 🔗 **Andere Links**
 
