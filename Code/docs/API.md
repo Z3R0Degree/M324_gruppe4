@@ -41,12 +41,12 @@ Erstellt einen neuen Mitarbeiter im System.
 
 **Request Felder:**
 
-| Feld             | Typ     | Erforderlich | Beschreibung                    |
-| ---------------- | ------- | ------------ | ------------------------------- |
-| `vorname`        | String  | Ja           | Vorname des Mitarbeiters        |
-| `nachname`       | String  | Ja           | Nachname des Mitarbeiters       |
-| `beitrittsdatum` | Datum   | Ja           | Beitrittsdatum (ISO 8601 Format)|
-| `skillLevel`     | Integer | Ja           | Skill-Level (1-5)               |
+| Feld             | Typ     | Erforderlich | Beschreibung                     |
+| ---------------- | ------- | ------------ | -------------------------------- |
+| `vorname`        | String  | Ja           | Vorname des Mitarbeiters         |
+| `nachname`       | String  | Ja           | Nachname des Mitarbeiters        |
+| `beitrittsdatum` | Datum   | Ja           | Beitrittsdatum (ISO 8601 Format) |
+| `skillLevel`     | Integer | Ja           | Skill-Level (1-5)                |
 
 **Validierungsregeln:**
 
@@ -172,14 +172,14 @@ Erstellt ein neues Ticket, das einem Mitarbeiter zugewiesen wird.
 
 **Request Felder:**
 
-| Feld            | Typ    | Erforderlich | Beschreibung                                        |
-| --------------- | ------ | ------------ | --------------------------------------------------- |
-| `status`        | String | Ja           | Ticket-Status (Open, In Progress, Review, Done)     |
-| `titel`         | String | Ja           | Ticket-Titel                                        |
-| `text`          | String | Ja           | Ticket-Beschreibung                                 |
-| `mitarbeiterId` | String | Ja           | ID des zugewiesenen Mitarbeiters                    |
-| `reviewDatum`   | Datum  | Nein         | Review-Datum (nur bei Status Review oder Done)      |
-| `doneDatum`     | Datum  | Nein         | Abschlussdatum (nur bei Status Done)                |
+| Feld            | Typ    | Erforderlich | Beschreibung                                    |
+| --------------- | ------ | ------------ | ----------------------------------------------- |
+| `status`        | String | Ja           | Ticket-Status (Open, In Progress, Review, Done) |
+| `titel`         | String | Ja           | Ticket-Titel                                    |
+| `text`          | String | Ja           | Ticket-Beschreibung                             |
+| `mitarbeiterId` | String | Ja           | ID des zugewiesenen Mitarbeiters                |
+| `reviewDatum`   | Datum  | Nein         | Review-Datum (nur bei Status Review oder Done)  |
+| `doneDatum`     | Datum  | Nein         | Abschlussdatum (nur bei Status Done)            |
 
 **Validierungsregeln:**
 
