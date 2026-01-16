@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticketsystem</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    nav button {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+
+    nav button:hover, nav button.active {
+      background: white;
+      color: #667eea;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      color: #667eea;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.7rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #555;
+    }
+
+    tr:hover {
+      background: #f8f9fa;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-open {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .status-in-progress {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+
+    .status-review {
+      background: #f3e5f5;
+      color: #7b1fa2;
+    }
+
+    .status-done {
+      background: #e8f5e9;
+      color: #388e3c;
+    }
+
+    .skill-level {
+      display: flex;
+      gap: 2px;
+    }
+
+    .skill-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e0e0e0;
+    }
+
+    .skill-dot.filled {
+      background: #667eea;
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-header h3 {
+      color: #667eea;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .close-btn:hover {
+      color: #333;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #999;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .stat-card h3 {
+      font-size: 2rem;
+      color: #667eea;
+    }
+
+    .stat-card p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ticketsystem</h1>
+    <nav>
+      <button class="active" onclick="showSection('dashboard')">Dashboard</button>
+      <button onclick="showSection('tickets')">Tickets</button>
+      <button onclick="showSection('employees')">Mitarbeiter</button>
+    </nav>
+  </header>
+
+  <main>
+    <div id="alert-container"></div>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section active">
+      <div class="stats" id="stats">
+        <div class="stat-card">
+          <h3 id="stat-total">0</h3>
+          <p>Tickets Gesamt</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="stat-open">0</h3>
+          <p>Offen</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="stat-progress">0</h3>
+          <p>In Bearbeitung</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="stat-done">0</h3>
+          <p>Erledigt</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Aktuelle Tickets</h2>
+        <div id="dashboard-tickets"></div>
+      </div>
+    </section>
+
+    <!-- Tickets Section -->
+    <section id="tickets" class="section">
+      <div class="card">
+        <h2>Neues Ticket erstellen</h2>
+        <form id="ticket-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="ticket-titel">Titel</label>
+              <input type="text" id="ticket-titel" required>
+            </div>
+            <div class="form-group">
+              <label for="ticket-status">Status</label>
+              <select id="ticket-status" required>
+                <option value="Open">Open</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Review">Review</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ticket-employee">Mitarbeiter</label>
+              <select id="ticket-employee" required>
+                <option value="">-- Auswählen --</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="ticket-text">Beschreibung</label>
+            <textarea id="ticket-text" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Ticket erstellen</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Alle Tickets</h2>
+        <div id="tickets-table"></div>
+      </div>
+    </section>
+
+    <!-- Employees Section -->
+    <section id="employees" class="section">
+      <div class="card">
+        <h2>Neuen Mitarbeiter hinzufügen</h2>
+        <form id="employee-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="emp-vorname">Vorname</label>
+              <input type="text" id="emp-vorname" required>
+            </div>
+            <div class="form-group">
+              <label for="emp-nachname">Nachname</label>
+              <input type="text" id="emp-nachname" required>
+            </div>
+            <div class="form-group">
+              <label for="emp-datum">Beitrittsdatum</label>
+              <input type="date" id="emp-datum" required>
+            </div>
+            <div class="form-group">
+              <label for="emp-skill">Skill Level (1-5)</label>
+              <select id="emp-skill" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Mitarbeiter hinzufügen</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Alle Mitarbeiter</h2>
+        <div id="employees-table"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit Ticket Modal -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Ticket bearbeiten</h3>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <form id="edit-ticket-form">
+        <input type="hidden" id="edit-ticket-id">
+        <div class="form-group">
+          <label for="edit-status">Status</label>
+          <select id="edit-status" required>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Review">Review</option>
+            <option value="Done">Done</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="edit-titel">Titel</label>
+          <input type="text" id="edit-titel" required>
+        </div>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="edit-text">Beschreibung</label>
+          <textarea id="edit-text" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Speichern</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+
+    // State
+    let employees = [];
+    let tickets = [];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      loadEmployees();
+      loadTickets();
+
+      document.getElementById('employee-form').addEventListener('submit', createEmployee);
+      document.getElementById('ticket-form').addEventListener('submit', createTicket);
+      document.getElementById('edit-ticket-form').addEventListener('submit', updateTicket);
+    });
+
+    // Navigation
+    function showSection(sectionId) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Alert
+    function showAlert(message, type = 'success') {
+      const container = document.getElementById('alert-container');
+      const alert = document.createElement('div');
+      alert.className = `alert alert-${type}`;
+      alert.textContent = message;
+      container.appendChild(alert);
+      setTimeout(() => alert.remove(), 3000);
+    }
+
+    // API Calls
+    async function loadEmployees() {
+      try {
+        const res = await fetch(`${API_BASE}/api/employees`);
+        employees = await res.json();
+        renderEmployees();
+        updateEmployeeSelect();
+      } catch (err) {
+        showAlert('Fehler beim Laden der Mitarbeiter', 'error');
+      }
+    }
+
+    async function loadTickets() {
+      try {
+        const res = await fetch(`${API_BASE}/api/tickets`);
+        tickets = await res.json();
+        renderTickets();
+        renderDashboard();
+        updateStats();
+      } catch (err) {
+        showAlert('Fehler beim Laden der Tickets', 'error');
+      }
+    }
+
+    async function createEmployee(e) {
+      e.preventDefault();
+      const data = {
+        vorname: document.getElementById('emp-vorname').value,
+        nachname: document.getElementById('emp-nachname').value,
+        beitrittsdatum: document.getElementById('emp-datum').value,
+        skillLevel: parseInt(document.getElementById('emp-skill').value)
+      };
+
+      try {
+        const res = await fetch(`${API_BASE}/api/employees`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          showAlert('Mitarbeiter erfolgreich erstellt');
+          e.target.reset();
+          loadEmployees();
+        } else {
+          const err = await res.json();
+          showAlert(err.error || 'Fehler beim Erstellen', 'error');
+        }
+      } catch (err) {
+        showAlert('Fehler beim Erstellen des Mitarbeiters', 'error');
+      }
+    }
+
+    async function createTicket(e) {
+      e.preventDefault();
+      const data = {
+        titel: document.getElementById('ticket-titel').value,
+        text: document.getElementById('ticket-text').value,
+        status: document.getElementById('ticket-status').value,
+        mitarbeiterId: document.getElementById('ticket-employee').value
+      };
+
+      try {
+        const res = await fetch(`${API_BASE}/api/tickets`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          showAlert('Ticket erfolgreich erstellt');
+          e.target.reset();
+          loadTickets();
+        } else {
+          const err = await res.json();
+          showAlert(err.error || 'Fehler beim Erstellen', 'error');
+        }
+      } catch (err) {
+        showAlert('Fehler beim Erstellen des Tickets', 'error');
+      }
+    }
+
+    async function updateTicket(e) {
+      e.preventDefault();
+      const id = document.getElementById('edit-ticket-id').value;
+      const status = document.getElementById('edit-status').value;
+      const data = {
+        status,
+        titel: document.getElementById('edit-titel').value,
+        text: document.getElementById('edit-text').value
+      };
+
+      if (status === 'Review' || status === 'Done') {
+        data.reviewDatum = new Date().toISOString();
+      }
+      if (status === 'Done') {
+        data.doneDatum = new Date().toISOString();
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/api/tickets/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          showAlert('Ticket erfolgreich aktualisiert');
+          closeModal();
+          loadTickets();
+        } else {
+          const err = await res.json();
+          showAlert(err.error || 'Fehler beim Aktualisieren', 'error');
+        }
+      } catch (err) {
+        showAlert('Fehler beim Aktualisieren des Tickets', 'error');
+      }
+    }
+
+    async function deleteTicket(id) {
+      if (!confirm('Ticket wirklich löschen?')) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/tickets/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (res.ok) {
+          showAlert('Ticket erfolgreich gelöscht');
+          loadTickets();
+        } else {
+          showAlert('Fehler beim Löschen', 'error');
+        }
+      } catch (err) {
+        showAlert('Fehler beim Löschen des Tickets', 'error');
+      }
+    }
+
+    // Rendering
+    function renderEmployees() {
+      const container = document.getElementById('employees-table');
+      if (employees.length === 0) {
+        container.innerHTML = '<div class="empty-state">Keine Mitarbeiter vorhanden</div>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Beitrittsdatum</th>
+              <th>Skill Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${employees.map(emp => `
+              <tr>
+                <td>${emp.vorname} ${emp.nachname}</td>
+                <td>${new Date(emp.beitrittsdatum).toLocaleDateString('de-CH')}</td>
+                <td>${renderSkillLevel(emp.skillLevel)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderSkillLevel(level) {
+      return `<div class="skill-level">
+        ${[1,2,3,4,5].map(i => `<div class="skill-dot ${i <= level ? 'filled' : ''}"></div>`).join('')}
+      </div>`;
+    }
+
+    function renderTickets() {
+      const container = document.getElementById('tickets-table');
+      if (tickets.length === 0) {
+        container.innerHTML = '<div class="empty-state">Keine Tickets vorhanden</div>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Titel</th>
+              <th>Status</th>
+              <th>Mitarbeiter</th>
+              <th>Erstellt</th>
+              <th>Aktionen</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tickets.map(ticket => {
+              const emp = employees.find(e => e._id === ticket.mitarbeiterId);
+              return `
+                <tr>
+                  <td>${ticket.titel}</td>
+                  <td>${renderStatus(ticket.status)}</td>
+                  <td>${emp ? `${emp.vorname} ${emp.nachname}` : '-'}</td>
+                  <td>${new Date(ticket.createdAt).toLocaleDateString('de-CH')}</td>
+                  <td class="actions">
+                    <button class="btn btn-primary btn-sm" onclick="openEditModal('${ticket._id}')">Bearbeiten</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteTicket('${ticket._id}')">Löschen</button>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderDashboard() {
+      const container = document.getElementById('dashboard-tickets');
+      const recentTickets = tickets.slice(0, 5);
+
+      if (recentTickets.length === 0) {
+        container.innerHTML = '<div class="empty-state">Keine Tickets vorhanden</div>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Titel</th>
+              <th>Status</th>
+              <th>Mitarbeiter</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${recentTickets.map(ticket => {
+              const emp = employees.find(e => e._id === ticket.mitarbeiterId);
+              return `
+                <tr>
+                  <td>${ticket.titel}</td>
+                  <td>${renderStatus(ticket.status)}</td>
+                  <td>${emp ? `${emp.vorname} ${emp.nachname}` : '-'}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderStatus(status) {
+      const statusClass = status.toLowerCase().replace(' ', '-');
+      return `<span class="status-badge status-${statusClass}">${status}</span>`;
+    }
+
+    function updateStats() {
+      document.getElementById('stat-total').textContent = tickets.length;
+      document.getElementById('stat-open').textContent = tickets.filter(t => t.status === 'Open').length;
+      document.getElementById('stat-progress').textContent = tickets.filter(t => t.status === 'In Progress').length;
+      document.getElementById('stat-done').textContent = tickets.filter(t => t.status === 'Done').length;
+    }
+
+    function updateEmployeeSelect() {
+      const select = document.getElementById('ticket-employee');
+      select.innerHTML = '<option value="">-- Auswählen --</option>' +
+        employees.map(emp => `<option value="${emp._id}">${emp.vorname} ${emp.nachname}</option>`).join('');
+    }
+
+    // Modal
+    function openEditModal(id) {
+      const ticket = tickets.find(t => t._id === id);
+      if (!ticket) return;
+
+      document.getElementById('edit-ticket-id').value = ticket._id;
+      document.getElementById('edit-status').value = ticket.status;
+      document.getElementById('edit-titel').value = ticket.titel;
+      document.getElementById('edit-text').value = ticket.text;
+      document.getElementById('edit-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('edit-modal').classList.remove('active');
+    }
+
+    // Close modal on outside click
+    document.getElementById('edit-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'edit-modal') closeModal();
+    });
+  </script>
+</body>
+</html>
