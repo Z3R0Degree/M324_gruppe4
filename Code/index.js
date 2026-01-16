@@ -44,7 +44,7 @@ try {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 } catch (err) {
   // If the swagger.json file is missing (e.g., before generation), log a warning but continue
-  console.warn('swagger.json not found — skipping /api-docs mounting');
+  console.warn('swagger.json not found — skipping /api-docs mounting', err);
 }
 
 // Employee API routes (Microservice 1)
