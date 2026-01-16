@@ -6,7 +6,7 @@ const app = require('../index');
 // Mock axios to prevent actual HTTP calls during tests
 jest.mock('axios');
 
-// Mock mongoose Employee model
+// Ensure mocked path matches import path
 jest.mock('../models/Employee');
 
 // Mock swagger

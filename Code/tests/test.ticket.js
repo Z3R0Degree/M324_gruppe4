@@ -5,10 +5,7 @@ const Ticket = require('../models/Ticket');
 const Employee = require('../models/Employee');
 const app = require('../index');
 
-// Mock axios for API calls
 jest.mock('axios');
-
-// Mock mongoose models
 jest.mock('../models/Ticket');
 jest.mock('../models/Employee');
 
