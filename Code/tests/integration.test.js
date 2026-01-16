@@ -1,9 +1,9 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../index');
-const Employee = require('./models/Employee');
-const Ticket = require('./models/Ticket');
-const config = require('./config');
+const Employee = require('../models/Employee');
+const Ticket = require('../models/Ticket');
+const config = require('../config');
 
 jest.mock('../swagger.json', () => ({}), { virtual: true });
 

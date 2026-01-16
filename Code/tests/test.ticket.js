@@ -2,7 +2,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const axios = require('axios');
 const Ticket = require('../models/Ticket');
-const Employee = require('./models/Employee');
+const Employee = require('../models/Employee');
 const app = require('../index');
 
 // Mock axios for API calls

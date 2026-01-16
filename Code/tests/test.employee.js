@@ -1,6 +1,6 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const Employee = require('./models/Employee');
+const Employee = require('../models/Employee');
 const app = require('../index');
 
 // Mock axios to prevent actual HTTP calls during tests
