@@ -1,16 +1,16 @@
-const request = require("supertest");
-const mongoose = require("mongoose");
-const Employee = require("./models/Employee");
-const app = require("../index");
+const request = require('supertest');
+const mongoose = require('mongoose');
+const Employee = require('./models/Employee');
+const app = require('../index');
 
 // Mock axios to prevent actual HTTP calls during tests
-jest.mock("axios");
+jest.mock('axios');
 
 // Mock mongoose Employee model
-jest.mock("../models/Employee");
+jest.mock('../models/Employee');
 
 // Mock swagger
-jest.mock("../swagger.json", () => ({}), { virtual: true });
+jest.mock('../swagger.json', () => ({}), { virtual: true });
 
 // In-memory storage for test data
 let employees = [];
@@ -43,8 +43,8 @@ const setupEmployeeMocks = () => {
 
   Employee.findById = jest.fn((id) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      const error = new Error("Cast to ObjectId failed");
-      error.name = "CastError";
+      const error = new Error('Cast to ObjectId failed');
+      error.name = 'CastError';
       throw error;
     }
     const employee = employees.find((emp) => emp._id === id);
@@ -97,48 +97,48 @@ beforeEach(() => {
   setupEmployeeMocks();
 });
 
-describe("Employee API - User Story 1 & 2", () => {
-  describe("POST /api/employees - User Story 1: Mitarbeiter erfassen", () => {
+describe('Employee API - User Story 1 & 2', () => {
+  describe('POST /api/employees - User Story 1: Mitarbeiter erfassen', () => {
     // Abnahmekriterium 1-5, 7: Create employee with all required fields
-    it("should create an employee with vorname, nachname, beitrittsdatum, and skillLevel", async () => {
+    it('should create an employee with vorname, nachname, beitrittsdatum, and skillLevel', async () => {
       // Arrange
       const employeeData = {
-        vorname: "Max",
-        nachname: "Muster",
-        beitrittsdatum: "2021-05-15",
+        vorname: 'Max',
+        nachname: 'Muster',
+        beitrittsdatum: '2021-05-15',
         skillLevel: 4,
       };
 
       // Act
-      const res = await request(app).post("/api/employees").send(employeeData);
+      const res = await request(app).post('/api/employees').send(employeeData);
 
       // Assert
       expect(res.statusCode).toBe(201);
-      expect(res.body).toHaveProperty("_id");
-      expect(res.body.vorname).toBe("Max");
-      expect(res.body.nachname).toBe("Muster");
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body.vorname).toBe('Max');
+      expect(res.body.nachname).toBe('Muster');
       expect(res.body.skillLevel).toBe(4);
     });
 
     // Abnahmekriterium 5: Unique ID is generated automatically
-    it("should automatically generate a unique ID for each employee", async () => {
+    it('should automatically generate a unique ID for each employee', async () => {
       // Arrange
       const employee1 = {
-        vorname: "Anna",
-        nachname: "Schmidt",
-        beitrittsdatum: "2020-03-10",
+        vorname: 'Anna',
+        nachname: 'Schmidt',
+        beitrittsdatum: '2020-03-10',
         skillLevel: 3,
       };
       const employee2 = {
-        vorname: "Peter",
-        nachname: "Müller",
-        beitrittsdatum: "2022-01-20",
+        vorname: 'Peter',
+        nachname: 'Müller',
+        beitrittsdatum: '2022-01-20',
         skillLevel: 5,
       };
 
       // Act
-      const res1 = await request(app).post("/api/employees").send(employee1);
-      const res2 = await request(app).post("/api/employees").send(employee2);
+      const res1 = await request(app).post('/api/employees').send(employee1);
+      const res2 = await request(app).post('/api/employees').send(employee2);
 
       // Assert
       expect(res1.body._id).toBeDefined();
@@ -147,58 +147,58 @@ describe("Employee API - User Story 1 & 2", () => {
     });
 
     // Abnahmekriterium 6: Validation for skillLevel range (1-5)
-    it("should reject skillLevel less than 1", async () => {
+    it('should reject skillLevel less than 1', async () => {
       // Arrange
       const employeeData = {
-        vorname: "Max",
-        nachname: "Muster",
-        beitrittsdatum: "2021-05-15",
+        vorname: 'Max',
+        nachname: 'Muster',
+        beitrittsdatum: '2021-05-15',
         skillLevel: 0,
       };
 
       // Act
-      const res = await request(app).post("/api/employees").send(employeeData);
+      const res = await request(app).post('/api/employees').send(employeeData);
 
       // Assert
       expect(res.statusCode).toBe(400);
       expect(res.body.error).toContain(
-        "Skilllevel muss eine ganze Zahl zwischen 1 und 5 sein"
+        'Skilllevel muss eine ganze Zahl zwischen 1 und 5 sein'
       );
     });
 
-    it("should reject skillLevel greater than 5", async () => {
+    it('should reject skillLevel greater than 5', async () => {
       // Arrange
       const employeeData = {
-        vorname: "Max",
-        nachname: "Muster",
-        beitrittsdatum: "2021-05-15",
+        vorname: 'Max',
+        nachname: 'Muster',
+        beitrittsdatum: '2021-05-15',
         skillLevel: 6,
       };
 
       // Act
-      const res = await request(app).post("/api/employees").send(employeeData);
+      const res = await request(app).post('/api/employees').send(employeeData);
 
       // Assert
       expect(res.statusCode).toBe(400);
       expect(res.body.error).toContain(
-        "Skilllevel muss eine ganze Zahl zwischen 1 und 5 sein"
+        'Skilllevel muss eine ganze Zahl zwischen 1 und 5 sein'
       );
     });
 
-    it("should accept skillLevel values 1 through 5", async () => {
+    it('should accept skillLevel values 1 through 5', async () => {
       // Test all valid values
       for (let skillLevel = 1; skillLevel <= 5; skillLevel++) {
         // Arrange
         const employeeData = {
-          vorname: "Test",
+          vorname: 'Test',
           nachname: `User${skillLevel}`,
-          beitrittsdatum: "2021-05-15",
+          beitrittsdatum: '2021-05-15',
           skillLevel,
         };
 
         // Act
         const res = await request(app)
-          .post("/api/employees")
+          .post('/api/employees')
           .send(employeeData);
 
         // Assert
@@ -208,96 +208,96 @@ describe("Employee API - User Story 1 & 2", () => {
     });
 
     // Abnahmekriterium 8: Clear error messages for invalid input
-    it("should return clear error message when vorname is missing", async () => {
+    it('should return clear error message when vorname is missing', async () => {
       // Arrange
       const employeeData = {
-        nachname: "Muster",
-        beitrittsdatum: "2021-05-15",
+        nachname: 'Muster',
+        beitrittsdatum: '2021-05-15',
         skillLevel: 4,
       };
 
       // Act
-      const res = await request(app).post("/api/employees").send(employeeData);
+      const res = await request(app).post('/api/employees').send(employeeData);
 
       // Assert
       expect(res.statusCode).toBe(400);
-      expect(res.body.error).toContain("Vorname");
+      expect(res.body.error).toContain('Vorname');
     });
 
-    it("should return clear error message when nachname is missing", async () => {
+    it('should return clear error message when nachname is missing', async () => {
       // Arrange
       const employeeData = {
-        vorname: "Max",
-        beitrittsdatum: "2021-05-15",
+        vorname: 'Max',
+        beitrittsdatum: '2021-05-15',
         skillLevel: 4,
       };
 
       // Act
-      const res = await request(app).post("/api/employees").send(employeeData);
+      const res = await request(app).post('/api/employees').send(employeeData);
 
       // Assert
       expect(res.statusCode).toBe(400);
-      expect(res.body.error).toContain("Nachname");
+      expect(res.body.error).toContain('Nachname');
     });
 
-    it("should return clear error message when beitrittsdatum is missing", async () => {
+    it('should return clear error message when beitrittsdatum is missing', async () => {
       // Arrange
       const employeeData = {
-        vorname: "Max",
-        nachname: "Muster",
+        vorname: 'Max',
+        nachname: 'Muster',
         skillLevel: 4,
       };
 
       // Act
-      const res = await request(app).post("/api/employees").send(employeeData);
+      const res = await request(app).post('/api/employees').send(employeeData);
 
       // Assert
       expect(res.statusCode).toBe(400);
-      expect(res.body.error).toContain("Beitrittsdatum");
+      expect(res.body.error).toContain('Beitrittsdatum');
     });
 
-    it("should return clear error message when skillLevel is missing", async () => {
+    it('should return clear error message when skillLevel is missing', async () => {
       // Arrange
       const employeeData = {
-        vorname: "Max",
-        nachname: "Muster",
-        beitrittsdatum: "2021-05-15",
+        vorname: 'Max',
+        nachname: 'Muster',
+        beitrittsdatum: '2021-05-15',
       };
 
       // Act
-      const res = await request(app).post("/api/employees").send(employeeData);
+      const res = await request(app).post('/api/employees').send(employeeData);
 
       // Assert
       expect(res.statusCode).toBe(400);
-      expect(res.body.error).toContain("Skilllevel");
+      expect(res.body.error).toContain('Skilllevel');
     });
   });
 
-  describe("GET /api/employees - User Story 2: Alle Mitarbeiter auslesen", () => {
+  describe('GET /api/employees - User Story 2: Alle Mitarbeiter auslesen', () => {
     // Abnahmekriterium 1, 2: Get all employees with all fields
-    it("should return all employees with all fields", async () => {
+    it('should return all employees with all fields', async () => {
       // Arrange - Create test employees
       const employees = [
         {
-          vorname: "Max",
-          nachname: "Muster",
-          beitrittsdatum: "2021-05-15",
+          vorname: 'Max',
+          nachname: 'Muster',
+          beitrittsdatum: '2021-05-15',
           skillLevel: 4,
         },
         {
-          vorname: "Anna",
-          nachname: "Schmidt",
-          beitrittsdatum: "2020-03-10",
+          vorname: 'Anna',
+          nachname: 'Schmidt',
+          beitrittsdatum: '2020-03-10',
           skillLevel: 3,
         },
       ];
 
       for (const emp of employees) {
-        await request(app).post("/api/employees").send(emp);
+        await request(app).post('/api/employees').send(emp);
       }
 
       // Act
-      const res = await request(app).get("/api/employees");
+      const res = await request(app).get('/api/employees');
 
       // Assert
       expect(res.statusCode).toBe(200);
@@ -306,28 +306,28 @@ describe("Employee API - User Story 1 & 2", () => {
 
       // Verify all fields are returned
       res.body.forEach((employee) => {
-        expect(employee).toHaveProperty("_id");
-        expect(employee).toHaveProperty("vorname");
-        expect(employee).toHaveProperty("nachname");
-        expect(employee).toHaveProperty("beitrittsdatum");
-        expect(employee).toHaveProperty("skillLevel");
+        expect(employee).toHaveProperty('_id');
+        expect(employee).toHaveProperty('vorname');
+        expect(employee).toHaveProperty('nachname');
+        expect(employee).toHaveProperty('beitrittsdatum');
+        expect(employee).toHaveProperty('skillLevel');
       });
     });
 
     // Abnahmekriterium 3: List is structured and clear
-    it("should return employees in a structured format", async () => {
+    it('should return employees in a structured format', async () => {
       // Arrange
       const employeeData = {
-        vorname: "Max",
-        nachname: "Muster",
-        beitrittsdatum: "2021-05-15",
+        vorname: 'Max',
+        nachname: 'Muster',
+        beitrittsdatum: '2021-05-15',
         skillLevel: 4,
       };
 
-      await request(app).post("/api/employees").send(employeeData);
+      await request(app).post('/api/employees').send(employeeData);
 
       // Act
-      const res = await request(app).get("/api/employees");
+      const res = await request(app).get('/api/employees');
 
       // Assert
       expect(res.statusCode).toBe(200);
@@ -335,17 +335,17 @@ describe("Employee API - User Story 1 & 2", () => {
     });
 
     // Abnahmekriterium 4: Works with large number of employees
-    it("should handle large number of employees without delays", async () => {
+    it('should handle large number of employees without delays', async () => {
       // Arrange - Create multiple employees
       const createPromises = [];
       for (let i = 0; i < 50; i++) {
         createPromises.push(
           request(app)
-            .post("/api/employees")
+            .post('/api/employees')
             .send({
               vorname: `Vorname${i}`,
               nachname: `Nachname${i}`,
-              beitrittsdatum: "2021-05-15",
+              beitrittsdatum: '2021-05-15',
               skillLevel: (i % 5) + 1,
             })
         );
@@ -354,7 +354,7 @@ describe("Employee API - User Story 1 & 2", () => {
 
       // Act
       const startTime = Date.now();
-      const res = await request(app).get("/api/employees");
+      const res = await request(app).get('/api/employees');
       const duration = Date.now() - startTime;
 
       // Assert
@@ -364,28 +364,28 @@ describe("Employee API - User Story 1 & 2", () => {
     });
 
     // Abnahmekriterium 5: Message when no employees exist
-    it("should return appropriate message when no employees exist", async () => {
+    it('should return appropriate message when no employees exist', async () => {
       // Act
-      const res = await request(app).get("/api/employees");
+      const res = await request(app).get('/api/employees');
 
       // Assert
       expect(res.statusCode).toBe(200);
-      expect(res.body).toHaveProperty("message");
-      expect(res.body.message).toContain("Keine Mitarbeiter");
+      expect(res.body).toHaveProperty('message');
+      expect(res.body.message).toContain('Keine Mitarbeiter');
       expect(res.body.employees).toEqual([]);
     });
 
     // Abnahmekriterium 6: Clear error messages for faulty queries
-    it("should return clear error for invalid employee ID", async () => {
+    it('should return clear error for invalid employee ID', async () => {
       // Act
-      const res = await request(app).get("/api/employees/invalid-id");
+      const res = await request(app).get('/api/employees/invalid-id');
 
       // Assert
       expect(res.statusCode).toBe(400);
-      expect(res.body.error).toContain("Ungültige Mitarbeiter-ID");
+      expect(res.body.error).toContain('Ungültige Mitarbeiter-ID');
     });
 
-    it("should return 404 for non-existent employee ID", async () => {
+    it('should return 404 for non-existent employee ID', async () => {
       // Arrange - Valid MongoDB ID format but non-existent
       const fakeId = new mongoose.Types.ObjectId();
 
@@ -394,7 +394,7 @@ describe("Employee API - User Story 1 & 2", () => {
 
       // Assert
       expect(res.statusCode).toBe(404);
-      expect(res.body.error).toContain("nicht gefunden");
+      expect(res.body.error).toContain('nicht gefunden');
     });
   });
 });
