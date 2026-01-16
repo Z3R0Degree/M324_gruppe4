@@ -1,6 +1,5 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-// FIX: import from parent models directory
 const Employee = require('../models/Employee');
 const app = require('../index');
 
