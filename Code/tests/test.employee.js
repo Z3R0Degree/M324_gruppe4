@@ -1,12 +1,13 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const Employee = require('./models/Employee');
+// FIX: import from parent models directory
+const Employee = require('../models/Employee');
 const app = require('../index');
 
 // Mock axios to prevent actual HTTP calls during tests
 jest.mock('axios');
 
-// Mock mongoose Employee model
+// Ensure mocked path matches import path
 jest.mock('../models/Employee');
 
 // Mock swagger

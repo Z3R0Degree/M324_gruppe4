@@ -36,7 +36,6 @@ app.use(metricsMiddleware);
 
 // Swagger UI (only mount if swagger.json exists)
 try {
-  // eslint-disable-next-line global-require
   const swaggerSpec = require('./swagger.json');
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 } catch (err) {
