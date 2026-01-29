@@ -1,5 +1,4 @@
 const swaggerAutogen = require('swagger-autogen')();
-const config = require('./config');
 
 const doc = {
   info: {
@@ -7,7 +6,7 @@ const doc = {
     description:
       'API Documentation for Employee and Ticket Management Microservices',
   },
-  host: `${config.hostUrl}`,
+  host: `https://m324.itsabi.com`,
   schemes: ['http'],
   tags: [
     {
