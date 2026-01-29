@@ -1,13 +1,13 @@
 version: '3.8'
 services:
   backend:
-    build: ./ticketsystem/backend
+    build: .
     ports:
       - '3000:3000'
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
   grafana:
@@ -15,12 +15,15 @@ services:
     ports:
       - '3001:3000'
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=false
     ports:
       - '9200:9200'
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.10.0
+    image: docker.elastic.co/kibana/kibana:8.12.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
       - '5601:5601'
