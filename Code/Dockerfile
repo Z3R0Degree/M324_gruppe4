@@ -3,9 +3,9 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package*.json ./
-
 # Install production dependencies only
 RUN npm ci --omit=dev
+RUN npm run build:swagger
 
 COPY . .
 

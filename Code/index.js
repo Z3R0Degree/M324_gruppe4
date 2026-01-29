@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
@@ -14,6 +15,9 @@ client.collectDefaultMetrics({ timeout: 5000 });
 // Middleware
 app.use(express.json());
 app.use(morgan('common'));
+
+// Serve static files from public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // attach structured logger to requests
 app.use((req, res, next) => {
@@ -40,7 +44,7 @@ try {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 } catch (err) {
   // If the swagger.json file is missing (e.g., before generation), log a warning but continue
-  console.warn('swagger.json not found — skipping /api-docs mounting');
+  console.warn('swagger.json not found — skipping /api-docs mounting', err);
 }
 
 // Employee API routes (Microservice 1)
